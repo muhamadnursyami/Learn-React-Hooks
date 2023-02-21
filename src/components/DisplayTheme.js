@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
-import { AppContext } from "../context.js/app-context";
+import React from "react";
+import { useAppContext } from "../context.js/app-context";
 
 export default function DisplayTheme() {
-  const context = useContext(AppContext);
+  // Kita langsung pangil function useAppContext karena disitu sudah terdapat useContext(AppContext;
+  const context = useAppContext();
   return <div>{context.theme}</div>;
 }

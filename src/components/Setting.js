@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { AppContext } from "../context.js/app-context";
+import { useAppContext } from "../context.js/app-context";
 
 export default function Setting() {
-  const context = useContext(AppContext);
+  // Kita langsung pangil function useAppContext karena disitu sudah terdapat useContext(AppContext;
+  const context = useAppContext();
   return (
     <div>
       <input

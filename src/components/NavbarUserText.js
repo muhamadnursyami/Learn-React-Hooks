@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { AppContext } from "../context.js/app-context";
+import { useAppContext } from "../context.js/app-context";
 
 export default function NavbarUserText() {
-  const context = useContext(AppContext);
+  // Kita langsung pangil function useAppContext karena disitu sudah terdapat useContext(AppContext;
+  const context = useAppContext();
 
   return <span onClick={context.func}>Hi, User {context?.user?.name}!</span>;
 }
