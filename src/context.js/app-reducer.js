@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 // Untuk Membuat  createContext menggunakan api createContext dari react
 // kemudia kita settings nilai defautlnya, ini sangat penting, jika nilai
 // atau Value, dari AppContext.provider tidak mengirim valuenya maka
@@ -15,30 +15,41 @@ export const useAppContext = () => {
   return useContext(AppContext);
 };
 
-export function AppProvider({ children }) {
-  const [user, setUser] = useState({});
-  const [theme, setTheme] = useState("dark");
+// Function Reducer dalam state reducer
+function reducer(state, action) {
+  switch (action.type) {
+    case "updateUser":
+      return { ...state, user: action.payload };
+    case "toggle":
+      return { ...state, theme: state.theme === "light" ? "dark" : "light" };
+    default:
+      throw Error("Not Found");
+  }
+}
 
+// Function nilai awal dalam state reeducer bentuk object
+const initialState = {
+  user: {},
+  theme: "dark",
+};
+// Kita akan pakai useReducer
+export function AppProvider({ children }) {
+  const [state, dispatch] = useReducer(reducer, initialState);
   // Data nya
   useEffect(() => {
     const user = {
       name: "John Doe",
       avatar: "https://randomuser.me/api/portraits/men/75.jpg",
     };
-    setUser(user);
+
+    dispatch({ type: "updateUser", payload: user });
   }, []);
 
   // sebelum appContextValue di masukan kedalam value dari provider, kita harus
   // buat terlebih dahulu object untuk menampung nilai user, juga bisa berupa function ,string dll
-  // NOTE: jika kita ingin mengubah user atau theme maka kita harus mengaksesnya dengan function state nya
-  // jika misalkan tidak ada statenya maka kita harus membuat statenya.
-  const appContextValue = {
-    user,
-    // func: () => alert(1),
-    setUser,
-    theme,
-    setTheme,
-  };
+  // disini saya contoh kan menggunakan array, karena pakai reducer. value state dan dispatch akan
+  // dikirimkan kedalam provider, dan juga lebih clean code,.
+  const appContextValue = [state, dispatch];
   return (
     // Component AppContext harus menggunakan provider, dan Component Navbar harus di bungkus dengan
     //    component AppContext dari value appContextValue, supaya nilai dari appContextValue bisa di pakai

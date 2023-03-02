@@ -1,7 +1,7 @@
-import { useAppContext } from "../context.js/app-context";
+import { useAppContext } from "../context.js/app-reducer";
 
 export default function NavbarUserAvatar() {
   // Kita langsung pangil function useAppContext karena disitu sudah terdapat useContext(AppContext;
-  const context = useAppContext();
-  return <img src={context?.user?.avatar} alt="avatar" width="50" />;
+  const [state] = useAppContext();
+  return <img src={state?.user?.avatar} alt="avatar" width="50" />;
 }

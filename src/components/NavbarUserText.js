@@ -1,8 +1,8 @@
-import { useAppContext } from "../context.js/app-context";
+import { useAppContext } from "../context.js/app-reducer";
 
 export default function NavbarUserText() {
   // Kita langsung pangil function useAppContext karena disitu sudah terdapat useContext(AppContext;
-  const context = useAppContext();
+  const [state] = useAppContext();
 
-  return <span onClick={context.func}>Hi, User {context?.user?.name}!</span>;
+  return <span>Hi, User {state?.user?.name}!</span>;
 }
